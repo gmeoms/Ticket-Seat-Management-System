@@ -1,0 +1,19 @@
+# Java compiled binaries
+bin/
+*.class
+
+# Persistent runtime data & exported files (local database state)
+data/
+tickets/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS metadata
+.DS_Store
+Thumbs.db
