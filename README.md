@@ -6,12 +6,12 @@ A modular, terminal-based **Event Ticket & Seat Management System** written in J
 
 ## 🛠️ Technologies & Tools Used
 
-- **Programming Language**: Java 17 (LTS)
-- **Architecture**: Modular Object-Oriented Design (MVC/Service Pattern)
-- **Data Persistence**: Java Object Serialization (`java.io.Serializable`)
-- **Testing Framework**: Custom Automated Unit Test Harness (`SystemTestSuite.java`)
-- **Version Control**: Git & GitHub (`.gitignore` included)
-- **Build & Launch Scripts**: Windows Batch (`run.bat`, `run-tests.bat`) & Shell (`run.sh`)
+- **Programming Language**: Java 17 
+- **Architecture**: Modular Object-Oriented Design 
+- **Data Persistence**: Java Object Serialization
+- **Testing Framework**: Custom Automated Unit Test Harness 
+- **Version Control**: Git & GitHub 
+- **Build & Launch Scripts**: Windows Batch 
 
 ---
 
@@ -36,7 +36,6 @@ A modular, terminal-based **Event Ticket & Seat Management System** written in J
 
 5. **Persistence & Quality Assurance**:
    - Automatic local file persistence (`data/system_store.dat`).
-   - 100% automated test coverage via `SystemTestSuite.java` (28 unit assertions).
 
 ---
 
