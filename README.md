@@ -1,6 +1,6 @@
 # Event Ticket & Seat Management System 
 
-A modular, terminal-based **Event Ticket & Seat Management System** written in Java. Built using standard Object-Oriented Programming (OOP) principles, modular architecture, serialized file persistence, and CLI interactive visualization.
+A modular, terminal-based **Event Ticket & Seat Management System** written in Java. Built using standard Object-Oriented Programming (OOP) principles, modular architecture, serialized file persistence, and CLI Interactive Visualization.
 
 ---
 
