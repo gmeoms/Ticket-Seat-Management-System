@@ -4,7 +4,7 @@ A modular, terminal-based **Event Ticket & Seat Management System** written in J
 
 ---
 
-## 🛠️ Technologies & Tools Used
+##  Technologies & Tools Used
 
 - **Programming Language**: Java 17 
 - **Architecture**: Modular Object-Oriented Design 
@@ -15,7 +15,7 @@ A modular, terminal-based **Event Ticket & Seat Management System** written in J
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
 1. **User Management & Role-Based Access Control**:
    - Customer & Administrator role separation.
@@ -39,7 +39,7 @@ A modular, terminal-based **Event Ticket & Seat Management System** written in J
 
 ---
 
-## 🖥️ Terminal UI Preview / Screenshots
+##  Terminal UI Preview / Screenshots
 
 ### 1. Interactive Seat Map Layout
 ```
@@ -81,7 +81,7 @@ Legend: [V] VIP (50% premium)  |  [R] Regular  |  [E] Economy  |  [X BOOK] Booke
 
 ---
 
-## 🔑 Default Credentials
+##  Default Credentials
 
 | Role | Username | Password |
 | :--- | :--- | :--- |
@@ -92,7 +92,7 @@ Legend: [V] VIP (50% premium)  |  [R] Regular  |  [E] Economy  |  [X BOOK] Booke
 
 ---
 
-## 🚀 Installation & Execution Steps
+##  Installation & Execution Steps
 
 ### Prerequisites
 - Java Development Kit (JDK 17 or higher installed).
@@ -126,7 +126,7 @@ Legend: [V] VIP (50% premium)  |  [R] Regular  |  [E] Economy  |  [X BOOK] Booke
 
 ---
 
-## 🧪 Instructions for Testing
+##  Instructions for Testing
 
 The system includes a self-contained test suite `SystemTestSuite.java` verifying 28 test assertions across all 5 core system modules.
 
@@ -138,7 +138,7 @@ java -cp bin com.eventticket.test.SystemTestSuite
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 .
@@ -172,6 +172,6 @@ java -cp bin com.eventticket.test.SystemTestSuite
 
 ---
 
-## 📄 Related Documentation
+##  Related Documentation
 - [statement.md](file:///c:/Users/RAJAT%20KUMAR/Desktop/New%20folder%20(2)/statement.md): Problem Statement, Scope, Target Users, and High-Level Features.
 - [docs/DESIGN_DOCUMENTATION.md](file:///c:/Users/RAJAT%20KUMAR/Desktop/New%20folder%20(2)/docs/DESIGN_DOCUMENTATION.md): System Architecture, Process Flow, UML Diagrams (Use Case, Class, Sequence), and Schema Design.
