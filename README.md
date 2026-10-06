@@ -176,6 +176,12 @@ java -cp bin com.eventticket.test.SystemTestSuite
 ├── run.sh                           # Shell script launcher
 └── README.md                        # Project documentation overview
 ```
+## 🔮 Future Improvements
+
+- Hash passwords instead of storing them as plain text
+- Replace serialization with a database (SQLite/MySQL)
+- Add a GUI front end (JavaFX/Swing)
+- Add seat-hold timeouts for unpaid reservations
 
 ---
 
