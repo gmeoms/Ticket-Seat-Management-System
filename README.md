@@ -23,7 +23,7 @@ A modular, terminal-based **Event Ticket & Seat Management System** written in J
 
 2. **Event & Seat Layout Management**:
    - Event creation with dynamic row x column grid layouts.
-   - Multi-tier seat pricing (VIP 150%, Regular 100%, Economy 85%).
+   - Multi-tier seat pricing (VIP 150%, Regular 100%, Economy 85% of the base price).
    - Printable ASCII visual seat map showing available (`[V A1]`) vs booked (`[X BOOK]`) seats.
 
 3. **Booking & Transaction Management**:
