@@ -245,8 +245,8 @@ public class Main {
             System.out.println("[Info] No matching events found for '" + keyword + "'.");
         } else {
             System.out.println("\n--- SEARCH RESULTS (" + results.size() + " matches) ---");
-            for (Event e : results) {
-                System.out.println(" - " + e);
+            for (Event event : results) {
+                System.out.println(" - " + event);
             }
         }
     }
