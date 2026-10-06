@@ -329,9 +329,7 @@ public class Main {
         if (allBookings.isEmpty()) {
             System.out.println("[Info] No bookings exist in the system.");
         } else {
-            for (Booking b : allBookings) {
-                System.out.println(" - " + b);
-            }
+            printBookings(allBookings);
         }
     }
 
