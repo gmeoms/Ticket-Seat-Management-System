@@ -6,6 +6,15 @@ bin/
 data/
 tickets/
 
+bin/
+*.class
+data/system_store.dat
+tickets/
+.idea/
+.vscode/
+*.iml
+out/
+
 # IDE files
 .idea/
 *.iml
