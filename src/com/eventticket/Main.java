@@ -319,9 +319,7 @@ public class Main {
         if (myBookings.isEmpty()) {
             System.out.println("[Info] You have no active or past bookings.");
         } else {
-            for (Booking b : myBookings) {
-                System.out.println(" - " + b);
-            }
+            printBookings(myBookings);
         }
     }
 
