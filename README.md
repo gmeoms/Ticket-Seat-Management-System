@@ -123,6 +123,13 @@ Legend: [V] VIP (50% premium)  |  [R] Regular  |  [E] Economy  |  [X BOOK] Booke
   chmod +x run.sh
   ./run.sh
   ```
+- **Run Unit Test Suite**:
+
+```
+mkdir -p bin
+javac -d bin -sourcepath src src/com/eventticket/test/SystemTestSuite.java
+java -cp bin com.eventticket.test.SystemTestSuite
+```
 
 ---
 
