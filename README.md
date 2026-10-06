@@ -11,7 +11,7 @@ A modular, terminal-based **Event Ticket & Seat Management System** written in J
 - **Data Persistence**: Java Object Serialization
 - **Testing Framework**: Custom Automated Unit Test Harness 
 - **Version Control**: Git & GitHub 
-- **Build & Launch Scripts**: Windows Batch 
+- **Build & Launch Scripts**: Windows Batch & Shell (`.bat`, `.sh`)
 
 ---
 
