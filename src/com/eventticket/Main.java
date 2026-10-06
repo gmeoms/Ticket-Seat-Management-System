@@ -285,8 +285,8 @@ public class Main {
         }
 
         System.out.println("\n--- BOOK EVENT TICKETS ---");
-        for (Event e : events) {
-            System.out.println(" - " + e);
+        for (Event listedEvent : events) {
+            System.out.println(" - " + listedEvent);
         }
 
         System.out.print("\nEnter Event ID to book (e.g., E101): ");
