@@ -13,8 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Entry point and command-line interface for the Event Ticket & Seat
+ * Management System. Shows a different menu depending on whether the user
+ * is a guest, a customer or an administrator.
+ */
 public class Main {
 
+    // Shared services, created once in main()
     private static DataStore dataStore;
     private static UserService userService;
     private static EventService eventService;
