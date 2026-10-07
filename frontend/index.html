@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ticket & Seat Management System</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:1150px;margin:28px auto;padding:0 20px;background:#f4f7fb;color:#172033}
+h1{margin:0 0 6px}.subtitle{margin-top:0;color:#667085}.card{background:#fff;padding:22px;margin:18px 0;border-radius:14px;box-shadow:0 4px 18px #00000012}h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}.show{border:1px solid #d5dce8;background:#fff;padding:15px;border-radius:10px;text-align:left;cursor:pointer}.show.active{border:2px solid #1769e0;background:#f0f6ff}.show b{font-size:18px}.muted{color:#667085}.details{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;background:#f7f9fc;padding:14px;border-radius:10px}.detail b{display:block;margin-bottom:4px}.screen{text-align:center;background:#e7ecf5;padding:12px;margin:20px auto;max-width:760px;border-radius:7px;font-weight:bold}.seat-area{max-width:760px;margin:auto}.row{display:flex;align-items:center;gap:8px;margin:9px 0}.rowlabel{width:24px;font-weight:bold}.seat{width:58px;height:42px;border:1px solid #c8d0dd;border-radius:8px;background:#fff;cursor:pointer}.seat.premium{border-color:#d59a28}.seat.booked{background:#d8dce2;color:#777;cursor:not-allowed}.seat.selected{background:#1769e0;color:#fff;border-color:#1769e0}.legend{display:flex;gap:18px;justify-content:center;margin:15px}.legend span{display:flex;align-items:center;gap:6px}.dot{width:16px;height:16px;border:1px solid #aaa;border-radius:4px;background:#fff}.dot.booked{background:#d8dce2}.dot.selected{background:#1769e0}.formrow{display:grid;grid-template-columns:1fr 1fr;gap:12px}.formrow label{font-weight:bold}.formrow select{padding:10px;border:1px solid #ccd4e0;border-radius:8px;margin-top:5px}.primary{background:#1769e0;color:#fff;border:0;padding:12px 20px;border-radius:8px;cursor:pointer;font-size:15px}.secondary{background:#fff;color:#1769e0;border:1px solid #1769e0;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:14px}.customer-form{margin-top:16px;padding:16px;background:#f7f9fc;border:1px solid #d9e0ea;border-radius:10px}.customer-form input{display:block;width:100%;box-sizing:border-box;padding:10px;border:1px solid #ccd4e0;border-radius:8px;margin-top:5px;font:inherit}.primary:disabled{background:#9db8e8;cursor:not-allowed}.success{background:#ecfdf3;border:1px solid #8ce0ad;padding:16px;border-radius:10px}.error{background:#fff1f2;border:1px solid #f5a4ad;padding:12px;border-radius:10px}.hidden{display:none}.status{font-size:14px;margin-bottom:10px}.ok{color:#087443}.bad{color:#b42318}
+@media(max-width:650px){.formrow{grid-template-columns:1fr}.seat{width:48px}}
+</style>
+</head>
+<body>
+<h1>Ticket & Seat Management System</h1>
+<p class="subtitle">DBMS demonstration interface — Flask connected directly to MySQL</p>
+<div id="dbStatus" class="status">Checking database connection...</div>
+
+<div class="card">
+<h2>1. Select Customer</h2>
+<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+<select id="user" style="padding:10px;width:100%;max-width:500px;border:1px solid #ccd4e0;border-radius:8px"></select>
+<button class="secondary" onclick="openCustomerForm()">+ Add New Customer</button>
+</div>
+<div id="customerForm" class="customer-form hidden">
+  <h3>Add New Customer</h3>
+  <div class="formrow">
+    <label>Full name
+      <input id="newName" type="text" placeholder="e.g. Jayesh Karmodia" maxlength="100">
+    </label>
+    <label>Email
+      <input id="newEmail" type="email" placeholder="e.g. jayesh@example.com" maxlength="120">
+    </label>
+  </div>
+  <div class="formrow" style="margin-top:12px">
+    <label>Phone <span class="muted">(optional)</span>
+      <input id="newPhone" type="tel" placeholder="10-digit phone number" maxlength="15">
+    </label>
+    <div style="display:flex;align-items:end;gap:8px">
+      <button class="primary" onclick="addCustomer()">Add Customer</button>
+      <button class="secondary" onclick="closeCustomerForm()">Cancel</button>
+    </div>
+  </div>
+  <div id="customerMessage" style="margin-top:12px"></div>
+</div>
+</div>
+
+<div class="card">
+<h2>2. Select Show</h2>
+<div id="shows" class="grid"></div>
+</div>
+
+<div class="card" id="seatCard">
+<h2>3. Select Seats</h2>
+<div id="showDetails" class="details"></div>
+<div class="screen">SCREEN</div>
+<div class="legend"><span><i class="dot"></i> Available</span><span><i class="dot selected"></i> Selected</span><span><i class="dot booked"></i> Booked</span></div>
+<div id="seats" class="seat-area"></div>
+<div style="margin-top:18px"><b>Payment method</b><br><select id="payment" style="padding:10px;margin-top:6px;border:1px solid #ccd4e0;border-radius:8px"><option value="UPI">UPI</option><option value="CARD">Card</option><option value="NET_BANKING">Net Banking</option><option value="CASH">Cash</option></select></div>
+<p>Selected: <b id="selectedCount">0</b> &nbsp; | &nbsp; Total: <b id="total">₹0</b></p>
+<button id="bookBtn" class="primary" disabled onclick="book()">Confirm Booking</button>
+<div id="message" style="margin-top:15px"></div>
+</div>
+
+<script>
+let currentShow=null, selected=[], showData=[];
+const $=id=>document.getElementById(id);
+async function api(url,options){const r=await fetch(url,options);const data=await r.json();if(!r.ok)throw new Error(data.error||'Request failed');return data;}
+async function init(){
+ try{
+  const health=await api('/api/health'); $('dbStatus').innerHTML=`<span class="ok">● Connected to MySQL database: <b>${health.database}</b></span>`;
+  const users=await api('/api/users'); renderUsers(users);
+  showData=await api('/api/shows'); renderShows();
+ }catch(e){$('dbStatus').innerHTML=`<span class="bad">● Database connection failed: ${e.message}</span>`;}
+}
+function renderUsers(users, selectId=null){
+  $('user').innerHTML=users.map(u=>`<option value="${u.user_id}">${u.full_name} — ${u.email}</option>`).join('');
+  if(selectId!==null) $('user').value=String(selectId);
+}
+function openCustomerForm(){
+  $('customerForm').classList.remove('hidden');
+  $('newName').focus();
+  $('customerMessage').innerHTML='';
+}
+function closeCustomerForm(){
+  $('customerForm').classList.add('hidden');
+  $('newName').value=''; $('newEmail').value=''; $('newPhone').value='';
+  $('customerMessage').innerHTML='';
+}
+async function addCustomer(){
+  const full_name=$('newName').value.trim();
+  const email=$('newEmail').value.trim();
+  const phone=$('newPhone').value.trim();
+  if(!full_name || !email){ $('customerMessage').innerHTML='<div class="error">Name and email are required.</div>'; return; }
+  const btn=document.querySelector('#customerForm .primary'); btn.disabled=true;
+  $('customerMessage').innerHTML='Adding customer...';
+  try{
+    const u=await api('/api/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({full_name,email,phone})});
+    const users=await api('/api/users');
+    renderUsers(users,u.user_id);
+    closeCustomerForm();
+    $('message').innerHTML=`<div class="success"><b>Customer added:</b> ${u.full_name} — ${u.email}</div>`;
+  }catch(e){
+    $('customerMessage').innerHTML=`<div class="error">${e.message}</div>`;
+  }finally{
+    btn.disabled=false;
+  }
+}
+function renderShows(){$('shows').innerHTML=showData.map(s=>`<button class="show ${currentShow===s.show_id?'active':''}" onclick="pick(${s.show_id})"><b>${s.event_name}</b><br><span class="muted">${s.event_type} · ${s.duration_minutes} min</span><br>${s.venue_name}, ${s.city} · ${s.screen_name}<br><b>${s.show_date} ${s.start_time} · ₹${s.base_price}</b></button>`).join('');}
+async function pick(id){currentShow=id;selected=[];renderShows();const s=showData.find(x=>x.show_id===id);$('showDetails').innerHTML=`<div class="detail"><b>Event</b>${s.event_name}</div><div class="detail"><b>Venue</b>${s.venue_name}, ${s.city}</div><div class="detail"><b>Screen</b>${s.screen_name}</div><div class="detail"><b>Show</b>${s.show_date} ${s.start_time}</div><div class="detail"><b>Price / seat</b>₹${s.base_price}</div>`;const seats=await api('/api/shows/'+id+'/seats');renderSeats(seats,s.base_price);}
+function renderSeats(items,price){let groups={};items.forEach(s=>(groups[s.seat_row]??=[]).push(s));$('seats').innerHTML=Object.entries(groups).map(([r,a])=>`<div class="row"><div class="rowlabel">${r}</div>${a.map(s=>`<button title="${s.seat_type}" class="seat ${s.seat_type==='PREMIUM'?'premium':''} ${s.booked?'booked':''}" ${s.booked?'disabled':''} id="seat-${s.seat_id}" onclick="toggle(${s.seat_id})">${r}${s.seat_number}</button>`).join('')}</div>`).join('');updateTotal(price);}
+function toggle(id){const b=$('seat-'+id);if(selected.includes(id)){selected=selected.filter(x=>x!==id);b.classList.remove('selected')}else{selected.push(id);b.classList.add('selected')}const s=showData.find(x=>x.show_id===currentShow);updateTotal(s.base_price);}
+function updateTotal(price){$('selectedCount').textContent=selected.length;$('total').textContent='₹'+(selected.length*Number(price||0));$('bookBtn').disabled=!currentShow||selected.length===0;}
+async function book(){if(!currentShow||!selected.length)return; $('bookBtn').disabled=true;$('message').innerHTML='Processing booking...';try{const r=await api('/api/book',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:Number($('user').value),show_id:currentShow,seat_ids:selected,payment_method:$('payment').value})});const name=$('user').selectedOptions[0].textContent.split(' — ')[0];$('message').innerHTML=`<div class="success"><h3>Booking Confirmed</h3><b>Ticket:</b> ${r.ticket_code}<br><b>Customer:</b> ${name}<br><b>Event:</b> ${r.event_name}<br><b>Venue:</b> ${r.venue_name}<br><b>Screen:</b> ${r.screen_name}<br><b>Seats:</b> ${r.seats.join(', ')}<br><b>Total:</b> ₹${r.total}</div>`;selected=[];await pick(currentShow);}catch(e){$('message').innerHTML=`<div class="error">${e.message}</div>`;$('bookBtn').disabled=false;}}
+init();
+</script>
+</body></html>
