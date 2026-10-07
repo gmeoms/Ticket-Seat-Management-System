@@ -51,4 +51,4 @@ The project scope includes:
 - **File Persistence**: Local Object Serialization (`data/system_store.dat`).
 - **E-Ticket Exporter**: Printable ticket receipts (`tickets/Ticket_<ID>.txt`).
 - **Executive Analytics**: Gross revenue and venue occupancy reports.
-- **Automated Unit Test Suite**: 28 automated assertions covering all core modules.
+- **Automated Unit Test Suite**: 28 automated assertions covering all of the core modules.
