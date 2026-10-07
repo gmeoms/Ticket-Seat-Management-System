@@ -8,4 +8,4 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 java -cp bin com.eventticket.test.SystemTestSuite
-pause
+pause 
