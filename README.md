@@ -2,7 +2,6 @@
 
 A **MySQL + Python terminal-based DBMS project** for managing events, shows, screens, seats, customers, bookings, payments and tickets.
 
-> The project is intentionally terminal-based so the database operations are easy to demonstrate during a DBMS viva while the actual data remains in MySQL.
 
 ## Features
 
